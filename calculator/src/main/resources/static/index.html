@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>계산기</title>
+</head>
+<body>
+
+    <select id="num1">
+        <option value="1" selected="selected">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+    <select>
+
+    <select id="sign">
+            <option value="+" selected="selected">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+     <select>
+
+    <select id="num2">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+    <select>
+
+    <button onclick="send()">확인</button>
+    <br>
+
+    <div id="display-data"></div>
+
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script>
+        async function send(){
+            let num1 = $("#num1").val();
+            let num2 = $("#num2").val();
+            let sign = $("#sign").val();
+
+            if(checkData(num1)){
+                return;
+            }
+
+            if(checkData(num2)){
+                return;
+            }
+
+            if(checkData(sign)){
+                return;
+            }
+
+            $.ajax({
+                url : "/cal/" + num1 + "/" + sign + "/" + num2,
+                async : true,
+                type : "GET",
+                success : await function (response){
+                    $("#display-data").html(JSON.stringify(response));
+                },
+                error : await function (error) {
+                    $("#display-data").html(JSON.stringify(error));
+                }
+            })
+        }
+
+        function checkData(tmp) {
+            if(!tmp || tmp === ''){
+                console.log("sadasdasd");
+                return true;
+            }
+        }
+    </script>
+</body>
+</html>
